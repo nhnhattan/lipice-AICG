@@ -1,7 +1,18 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  output: 'export',
+  images: {
+    unoptimized: true,
+  }
 };
 
-export default nextConfig;
+// const nextConfig = {
+//   output: 'export',
+//   basePath: '/Lipice-AICG',
+//   assetPrefix: '/Lipice-AICG/',
+//   trailingSlash: true, 
+// };
+
+
+module.exports = nextConfig;
