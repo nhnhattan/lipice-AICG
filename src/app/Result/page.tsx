@@ -1,11 +1,5 @@
-import Example from "../Example/page";
-
 const page = () => {
-  return (
-    <>
-      <Example />
-    </>
-  );
+  return <></>;
 };
 
 export default page;
