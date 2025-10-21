@@ -92,6 +92,21 @@ const page = () => {
                 </>
               ) : isSelect == "changeInfor" ? (
                 <div className="flex flex-col items-center justify-center gap-4 mt-8 md:gap-10">
+                  <div
+                    className={`w-3/5 flex items-center justify-center py-4 relative`}
+                  >
+                    <Image
+                      width={100}
+                      height={100}
+                      src="./img/elements/annouce.png"
+                      alt=""
+                      className="w-full"
+                      draggable={false}
+                    />
+                    <p className="absolute mt-[12%] text-xs font-black uppercase text-[#ff86a2]">
+                      THÔNG TIN CÁ NHÂN
+                    </p>
+                  </div>
                   <div className="relative w-3/5 md:w-3/6 flex items-center justify-center">
                     <div className="absolute top-0 left-0">
                       <Image
@@ -162,6 +177,21 @@ const page = () => {
               ) : (
                 <div className="flex flex-col items-center justify-center gap-4 mt-8 md:gap-10">
                   <div className="relative w-3/5 md:w-3/6  flex items-center justify-center">
+                    <div
+                      className={`w-3/5 flex items-center justify-center py-4 relative`}
+                    >
+                      <Image
+                        width={100}
+                        height={100}
+                        src="./img/elements/annouce.png"
+                        alt=""
+                        className="w-full"
+                        draggable={false}
+                      />
+                      <p className="absolute mt-[12%] text-xs font-black uppercase text-[#ff86a2]">
+                        ĐỔI MẬT KHẨU
+                      </p>
+                    </div>
                     <div className="absolute top-0 left-0">
                       <Image
                         width={100}

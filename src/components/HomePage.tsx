@@ -28,19 +28,17 @@ const HomePage = () => {
               />
             </div>
 
-            <button className="cursor-pointer px-4 mt-4 flex items-center justify-center animate-wiggle animate-infinite animate-ease-linear hover:opacity-85 hover:scale-110 transition-all relative">
+            <Link
+              href={"/Authentication"}
+              className="cursor-pointer px-4 mt-4 flex items-center justify-center animate-wiggle animate-infinite animate-ease-linear hover:opacity-85 hover:scale-110 transition-all relative"
+            >
               <img
                 src="./img/elements/buttonStart.png"
                 alt=""
                 className="w-full absolute"
               />
-              <Link
-                href={"/Authentication"}
-                className="z-10 relative text-white"
-              >
-                CLICK TO START
-              </Link>
-            </button>
+              <p className="z-10 relative text-white">CLICK TO START</p>
+            </Link>
           </div>
         </div>
       </div>

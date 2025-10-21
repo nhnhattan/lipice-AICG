@@ -5,7 +5,7 @@ import Modal from "./Modal";
 import { useStepperStore } from "@/stores/stepperStore";
 import toast from "react-hot-toast";
 
-const Step6 = () => {
+const Step6: React.FC = () => {
   const reset = useStepperStore((state) => state.reset);
   const setReadRule = useStepperStore((state) => state.setReadRule);
 

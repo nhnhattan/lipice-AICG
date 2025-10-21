@@ -5,10 +5,12 @@ import Modal from "./Modal";
 import { useStepperStore } from "@/stores/stepperStore";
 import toast from "react-hot-toast";
 
-const Step5 = () => {
+const Step5: React.FC = () => {
   const setCurrentStep = useStepperStore((state) => state.setCurrentStep);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isShared, setIsShared] = useState(false);
+
   return (
     <>
       {isOpen && (
@@ -29,7 +31,7 @@ const Step5 = () => {
                 setIsOpen(false);
                 setCurrentStep(6);
               }}
-              className="max-w-3/7 w-3/7 flex items-center justify-center relative cursor-pointer hover:scale-110 hover:opacity-80 transition-all"
+              className="max-w-4/7 w-4/7 flex items-center justify-center relative cursor-pointer hover:scale-110 hover:opacity-80 transition-all"
             >
               <Image
                 width={100}
@@ -39,7 +41,7 @@ const Step5 = () => {
                 className="w-full "
                 draggable={false}
               />
-              <p className="absolute text-xs top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-black uppercase">
+              <p className="absolute text-nowrap text-xs top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-black uppercase">
                 Tạo video
               </p>
             </button>
@@ -129,7 +131,16 @@ const Step5 = () => {
               </div>
               <div className="w-full flex items-center justify-center gap-4">
                 <button
-                  onClick={() => {toast.success("Chia sẻ thành công!")}}
+                  onClick={() => {
+                    if (!isShared) {
+                      toast.success(
+                        "Chia sẻ thành công! Bạn nhận được 200 điểm"
+                      );
+                      setIsShared(true);
+                    } else if (isShared) {
+                      toast.error("Bạn đã chia sẻ rồi!");
+                    }
+                  }}
                   className="max-w-5/8 min-w-4/7 flex items-center justify-center relative cursor-pointer hover:scale-110 hover:opacity-80 transition-all"
                 >
                   <Image

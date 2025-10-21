@@ -1,7 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useStepperStore } from "../stores/stepperStore";
+import { useRouter, useSearchParams } from "next/navigation";
+
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
@@ -9,14 +11,40 @@ import Step4 from "./Step4";
 import Step5 from "./Step5";
 import Step6 from "./Step6";
 
-interface Step {
-  number: number;
-  title: string;
-}
-
 const Stepper: React.FC = () => {
   const currentStep = useStepperStore((state) => state.currentStep);
+  const setCurrentStep = useStepperStore((state) => state.setCurrentStep);
 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // 🔁 1. Lấy step từ URL khi load trang
+  useEffect(() => {
+    const stepFromURL = Number(searchParams.get("step"));
+    if (!isNaN(stepFromURL) && stepFromURL >= 1 && stepFromURL <= 6) {
+      setCurrentStep(stepFromURL);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    const stepFromURL = Number(searchParams.get("step"));
+    const isStepValid =
+      !isNaN(stepFromURL) && stepFromURL >= 1 && stepFromURL <= 6;
+    if (!isStepValid) return;
+    if ((currentStep === 5 || currentStep === 6) && stepFromURL < currentStep) {
+      return;
+    }
+    setCurrentStep(stepFromURL);
+  }, [searchParams]);
+
+  useEffect(() => {
+    setCurrentStep(1);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("step", "1");
+    router.replace(`?${newSearchParams.toString()}`);
+  }, []);
+
+  // 3. Hiển thị nội dung từng step
   const renderStepContent = (): React.ReactNode => {
     switch (currentStep) {
       case 1:

@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import { useStepperStore } from "../stores/stepperStore";
-import { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Crop from "./Crop";
-import Modal from "./Modal";
 import toast from "react-hot-toast";
 import Webcam from "react-webcam";
 
-const Step4 = () => {
+
+const Step4:React.FC = () => {
   const setCurrentStep = useStepperStore((state) => state.setCurrentStep);
   const reset = useStepperStore((state) => state.reset);
 
@@ -217,6 +217,7 @@ const Step4 = () => {
                     videoConstraints={videoConstraints}
                     onUserMedia={handleCameraReady}
                     onUserMediaError={handleCameraError}
+                    reversed
                   />
                 </div>
               )}
