@@ -18,7 +18,6 @@ const Stepper: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // 🔁 1. Lấy step từ URL khi load trang
   useEffect(() => {
     const stepFromURL = Number(searchParams.get("step"));
     if (!isNaN(stepFromURL) && stepFromURL >= 1 && stepFromURL <= 6) {

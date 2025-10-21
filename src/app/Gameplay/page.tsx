@@ -1,3 +1,5 @@
+"use client";
+
 import Stepper from "@/components/Stepper";
 import Image from "next/image";
 
