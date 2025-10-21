@@ -84,7 +84,7 @@ const Step6: React.FC = () => {
                     className="w-full "
                     draggable={false}
                   />
-                  <p className="absolute text-xs top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-black uppercase">
+                  <p className="absolute text-nowrap text-xs top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-black uppercase">
                     Tải video
                   </p>
                 </button>

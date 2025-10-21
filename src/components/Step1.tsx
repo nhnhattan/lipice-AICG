@@ -92,7 +92,7 @@ const Step1: React.FC = () => {
             alt=""
             className="w-full h-full absolute top-0 left-0 -z-[1]"
           />
-          <p className="py-3 text-sm md:py-5">cửa hàng đổi thưởng</p>
+          <p className="py-3 text-sm md:py-5 text-nowrap">cửa hàng đổi thưởng</p>
         </button>
       </div>
     </div>
