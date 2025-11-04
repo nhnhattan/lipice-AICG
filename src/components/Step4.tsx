@@ -98,7 +98,7 @@ const Step4: React.FC = () => {
             height={100}
             src="./img/bg/chosenBG.png"
             alt=""
-            className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
+            className="w-full h-screen fixed object-cover object-center top-0 cursor-none -z-[1]"
           />
         ) : (
           <Image
@@ -106,7 +106,7 @@ const Step4: React.FC = () => {
             height={100}
             src="./img/bg/bgDesktop.png"
             alt=""
-            className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
+            className="w-full h-screen fixed object-cover object-center top-0 cursor-none -z-[1]"
           />
         )}
         <div className="w-full min-h-[90vh] max-h-[90%] flex flex-col items-center gap-8">
