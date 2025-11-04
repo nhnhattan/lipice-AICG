@@ -1,64 +1,112 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useStepperStore } from "@/stores/stepperStore";
 import toast from "react-hot-toast";
+import { isMobile, isTablet, isDesktop } from "react-device-detect";
+import Modal3 from "./Modal3";
+import Modal4 from "./Modal4";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const Step5: React.FC = () => {
+  const router = useRouter();
   const setCurrentStep = useStepperStore((state) => state.setCurrentStep);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isCreate, setIsCreate] = useState(true);
   const [isShared, setIsShared] = useState(false);
+
+  const [deviceType, setDeviceType] = useState<
+    "mobile" | "tablet" | "desktop" | null
+  >(null);
+
+  useEffect(() => {
+    if (isTablet) setDeviceType("tablet");
+    else if (isMobile) setDeviceType("mobile");
+    else setDeviceType("desktop");
+  }, []);
+
+  if (!deviceType) return null;
 
   return (
     <>
       {isOpen && (
-        <Modal
+        <Modal4
           isOpen={isOpen}
-          modalTittle="Lưu ý"
           onClose={() => {
             setIsOpen(false);
           }}
-          buttonTittle="Hủy"
+          onCompleted={() => {
+            setIsOpen(false);
+            setCurrentStep(6);
+          }}
         >
-          <div className="flex items-center justify-center flex-col gap-4 p-2">
-            <p className="text-base uppercase font-black text-center">
-              Nhớ tải ảnh và chia sẻ để tích điểm bạn nhé!
-            </p>
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                setCurrentStep(6);
-              }}
-              className="max-w-4/7 w-4/7 flex items-center justify-center relative cursor-pointer hover:scale-110 hover:opacity-80 transition-all"
-            >
-              <Image
-                width={100}
-                height={100}
-                src={"./img/elements/buttonBg3.png"}
-                alt=""
-                className="w-full "
-                draggable={false}
-              />
-              <p className="absolute text-nowrap text-xs top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-black uppercase">
-                Tạo video
-              </p>
-            </button>
+          <div className="flex items-center justify-center flex-col py-2">
+            <Image
+              width={100}
+              height={100}
+              src="./img/contexts/noticeContext.png"
+              alt=""
+              className="w-full"
+            />
           </div>
-        </Modal>
+        </Modal4>
       )}
+      <Modal3
+        isOpen={isCreate}
+        onClose={() => {
+          setIsCreate(false);
+        }}
+        type="image"
+      >
+        <>
+          <div className="flex items-center justify-center w-full gap-4 py-2">
+            <p className="font-black text-6xl text-[#ff85af]">50</p>
+            <Image
+              width={100}
+              height={100}
+              src="./img/elements/star-icon.png"
+              alt=""
+              className="w-1/4"
+              draggable={false}
+            />
+          </div>
+        </>
+      </Modal3>
       <div className="flex flex-col items-center h-full gap-4 w-full overflow-hidden box-border">
-        <Image
-          width={100}
-          height={100}
-          src="./img/bg/chosenBG.png"
-          alt=""
-          className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
-          draggable={false}
-        />
+        {isMobile ? (
+          <Image
+            width={100}
+            height={100}
+            src="./img/bg/chosenBG.png"
+            alt=""
+            className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
+          />
+        ) : (
+          <Image
+            width={100}
+            height={100}
+            src="./img/bg/bgDesktop.png"
+            alt=""
+            className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
+          />
+        )}
         <div className="w-full h-[90%] max-h-[90%] flex flex-col items-center  gap-8">
-          <div className={`w-full flex items-center justify-center py-4`}>
+          <div className={`w-full flex items-center justify-around py-4`}>
+            <Image
+              width={100}
+              height={100}
+              src="./img/elements/homeIcon.png"
+              alt=""
+              className="w-1/9 cursor-pointer"
+              draggable={false}
+              onClick={() => {
+                router.push("/Gameplay");
+                setCurrentStep(1);
+              }}
+            />
             <Image
               width={100}
               height={100}
@@ -66,6 +114,29 @@ const Step5: React.FC = () => {
               alt=""
               className="w-2/6"
               draggable={false}
+            />
+            <Image
+              width={100}
+              height={100}
+              src="./img/elements/star-icon.png"
+              alt=""
+              className="w-1/10 cursor-pointer"
+              draggable={false}
+              onClick={() => {
+                Swal.fire({
+                  title:
+                    "Hãy nhớ chia sẻ hoặc tải ảnh trước khi đến trang đổi quà!",
+                  showCancelButton: true,
+                  confirmButtonText: "Đổi quà",
+                  cancelButtonText: `Hủy`,
+                }).then(async (result) => {
+                  if (result.isConfirmed) {
+                    await router.push("/Redemption-Store");
+                  } else if (result.isDenied) {
+                    Swal.fire("Changes are not saved", "", "info");
+                  }
+                });
+              }}
             />
           </div>
           <div className="max-w-4/5 w-4/5 md:w-3/5 lg:w-4/5 gap-4 flex flex-col items-center justify-center relative oveflow-hidden">

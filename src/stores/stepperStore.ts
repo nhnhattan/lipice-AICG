@@ -9,7 +9,7 @@ export interface StepperState {
 }
 
 export const useStepperStore = create<StepperState>((set) => ({
-  currentStep: 1,
+  currentStep: 5,
   readRule: false,
   setReadRule: (read: boolean) => set({ readRule: read }),
   setCurrentStep: (step: number) => set({ currentStep: step }),

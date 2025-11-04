@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import { useStepperStore } from "../stores/stepperStore";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Crop from "./Crop";
 import toast from "react-hot-toast";
 import Webcam from "react-webcam";
+import { isMobile, isTablet, isDesktop } from "react-device-detect";
+import { useRouter } from "next/navigation";
 
-
-const Step4:React.FC = () => {
+const Step4: React.FC = () => {
+  const router = useRouter()
   const setCurrentStep = useStepperStore((state) => state.setCurrentStep);
   const reset = useStepperStore((state) => state.reset);
 
@@ -75,25 +77,66 @@ const Step4:React.FC = () => {
     facingMode: "user",
   };
 
+  const [deviceType, setDeviceType] = useState<
+    "mobile" | "tablet" | "desktop" | null
+  >(null);
+
+  useEffect(() => {
+    if (isTablet) setDeviceType("tablet");
+    else if (isMobile) setDeviceType("mobile");
+    else setDeviceType("desktop");
+  }, []);
+
+  if (!deviceType) return null;
+
   return (
     <>
-      <div className="flex flex-col items-center h-full gap-4 w-full overflow-hidden box-border">
-        <Image
-          width={100}
-          height={100}
-          src="./img/bg/chosenBG.png"
-          alt=""
-          className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
-          draggable={false}
-        />
-        <div className="w-full h-[90%] max-h-[90%] flex flex-col items-center justify-center gap-8">
-          <div className={`w-full flex items-center justify-center py-4`}>
+      <div className="flex flex-col items-center justify-around h-full gap-4 w-full overflow-hidden box-border">
+        {isMobile ? (
+          <Image
+            width={100}
+            height={100}
+            src="./img/bg/chosenBG.png"
+            alt=""
+            className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
+          />
+        ) : (
+          <Image
+            width={100}
+            height={100}
+            src="./img/bg/bgDesktop.png"
+            alt=""
+            className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
+          />
+        )}
+        <div className="w-full min-h-[90vh] max-h-[90%] flex flex-col items-center gap-8">
+          <div className={`w-full flex items-center justify-around py-4 lg:mb-30 `}>
+            <Image
+              width={100}
+              height={100}
+              src="./img/elements/homeIcon.png"
+              alt=""
+              className="w-1/9 cursor-pointer"
+              draggable={false}
+              onClick={() => {
+                router.push("/Gameplay");
+                setCurrentStep(1);
+              }}
+            />
             <Image
               width={100}
               height={100}
               src="./img/logo/logo.png"
               alt=""
               className="w-2/6"
+              draggable={false}
+            />
+            <Image
+              width={100}
+              height={100}
+              src="./img/elements/homeIcon.png"
+              alt=""
+              className="w-1/8 opacity-0"
               draggable={false}
             />
           </div>
@@ -141,7 +184,7 @@ const Step4:React.FC = () => {
           ) : isSelect == "camera" ? (
             <div className="max-w-4/5 w-4/5 md:w-3/5 lg:w-4/5 gap-4 flex flex-col items-center justify-center relative oveflow-hidden">
               {isPhoto ? (
-                <div className="max-w-4/5 w-4/5 gap-1 flex flex-col items-center justify-center relative oveflow-hidden">
+                <div className="w-full gap-1 flex flex-col items-center justify-center relative oveflow-hidden">
                   <div
                     className={`w-full flex items-center justify-center overflow-hidden`}
                   >
@@ -165,7 +208,7 @@ const Step4:React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="max-w-4/5 w-4/5  gap-1 flex flex-col items-center justify-center relative oveflow-hidden">
+                <div className=" w-full  gap-1 flex flex-col items-center justify-center relative oveflow-hidden">
                   <Image
                     width={100}
                     height={100}

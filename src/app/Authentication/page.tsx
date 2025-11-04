@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { isMobile, isTablet, isDesktop } from "react-device-detect";
 
 const page = () => {
   const router = useRouter();
@@ -20,17 +21,47 @@ const page = () => {
     router.push("/Gameplay");
     console.log("register");
   };
+
+  const [deviceType, setDeviceType] = useState<
+    "mobile" | "tablet" | "desktop" | null
+  >(null);
+
+  useEffect(() => {
+    if (isTablet) setDeviceType("tablet");
+    else if (isMobile) setDeviceType("mobile");
+    else setDeviceType("desktop");
+  }, []);
+
+  if (!deviceType) return null;
+
   return (
     <>
+      {isMobile ? (
+        <Image
+          width={100}
+          height={100}
+          src="./img/bg/bgAuthMobile.png"
+          alt=""
+          className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
+        />
+      ) : (
+        <Image
+          width={100}
+          height={100}
+          src="./img/bg/bgDesktop2.png"
+          alt=""
+          className="w-full fixed object-cover object-center top-0 cursor-none -z-[1]"
+        />
+      )}
       <div className="w-screen flex items-center justify-center">
         <div className="w-screen h-screen lg:w-1/4 lg:max-w-1/4  max-h-screen overflow-hidden p-4 flex flex-col items-center gap-4 relative box-border ">
-          <Image
+          {/* <Image
             width={100}
             height={100}
             src="./img/bg/bgAuthMobile.png"
             alt=""
             className="w-full h-full absolute object-cover object-center top-0 left-0 z-0"
-          />
+          /> */}
           <div className="w-2/5 2xl:w-2/6">
             <Image
               width={100}
@@ -268,7 +299,7 @@ const page = () => {
             height={100}
             src="./img/elements/cloud.png"
             alt=""
-            className="absolute w-full bottom-0 left-0 z-10"
+            className="absolute w-full bottom-0 left-0 z-10 lg:hidden"
           />
         </div>
       </div>

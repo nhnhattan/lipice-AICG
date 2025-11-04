@@ -1,15 +1,38 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { isMobile, isTablet, isDesktop } from "react-device-detect";
 
 const HomePage = () => {
+  const [deviceType, setDeviceType] = useState<
+    "mobile" | "tablet" | "desktop" | null
+  >(null);
+
+  useEffect(() => {
+    if (isTablet) setDeviceType("tablet");
+    else if (isMobile) setDeviceType("mobile");
+    else setDeviceType("desktop");
+  }, []);
+
+  if (!deviceType) return null;
+
   return (
     <>
-      <div className="w-screen h-screen 2xl:w-1/4 flex items-center justify-center relative box-border overflow-hidden">
+      {!isMobile ? (
         <img
-          src="./img/bg/bgHomeMobile.png"
+          src={`./img/bg/bgDesktop.png`}
           alt=""
           className="absolute -z-[1] w-full h-full object-cover object-center"
         />
+      ) : (
+        <img
+          src={`./img/bg/bgHomeMobile.png`}
+          alt=""
+          className="absolute -z-[1] w-full h-full object-cover object-center"
+        />
+      )}
+      <div className="w-screen h-screen 2xl:w-1/4 flex items-center justify-center relative box-border overflow-hidden">
         <div className="relative w-[100vw] h-screen flex items-center justify-center">
           <img
             src="./img/elements/gameMachine.png"

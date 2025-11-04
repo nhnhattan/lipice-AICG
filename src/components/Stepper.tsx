@@ -43,7 +43,6 @@ const Stepper: React.FC = () => {
     router.replace(`?${newSearchParams.toString()}`);
   }, []);
 
-  // 3. Hiển thị nội dung từng step
   const renderStepContent = (): React.ReactNode => {
     switch (currentStep) {
       case 1:
